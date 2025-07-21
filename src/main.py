@@ -1,6 +1,3 @@
-'''Check whether the data buffer should store the dict(feature_name and value) or only 
-values as an array and convert it into a dataframe'''
-
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -153,60 +150,3 @@ if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
     
 # ======================================= NEW LOGIC ENDS HERE =================================
-
-'''@app.get("/",response_class=HTMLResponse)
-async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-@app.post("/predict")
-async def predict_stroke(data: StrokeData):
-    if model is None or scaler is None:
-        return {"error": "Model or scaler not loaded."}
-
-    # Create DataFrame from Pydantic model
-    features_df = pd.DataFrame(data.model_dump())
-    
-    # Scale features and predict
-    features_scaled = scaler.transform(features_df)
-    prediction = model.predict(features_scaled)
-    
-    return {"prediction": prediction[0]}
-
-
-@app.get("/test-predict")
-async def test_predict():
-    """Test endpoint with sample data"""
-    if model is None:
-        return {"error": "Model not found. Please train the model first."}
-    
-    # Sample data from your dataset
-    features = [-0.351,0.7,0.02,16.6,31.6,-108.0]
-    
-    features_df = pd.DataFrame([features], columns=FEATURE_NAMES)
-    
-    # Apply scaling if scaler is available
-    if scaler is not None:
-        features_scaled = scaler.transform(features_df)
-        features_df_scaled = pd.DataFrame(features_scaled, columns=FEATURE_NAMES)
-    else:
-        features_df_scaled = features_df
-    
-    # Make prediction
-    prediction = model.predict(features_df_scaled)
-    return {
-        "prediction": prediction[0],
-        "sample_data": {
-            "acc_x": features[0],
-            "acc_y": features[1], 
-            "acc_z": features[2],
-            "gyro_x": features[3],
-            "gyro_y": features[4],
-            "gyro_z": features[5]
-        }
-    }
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)'''
-
