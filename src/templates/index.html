@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swing Analysis System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Tennis Swing Analysis</h1>
+            <ul>
+                <li><a href="#live-analysis" class="nav-link active">Live Analysis</a></li>
+                <li><a href="#analysis" class="nav-link">Analysis</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Live Analysis Page -->
+        <section id="live-analysis" class="page active">
+            <h2>Real-time Stroke Prediction</h2>
+            <div class="controls-container">
+                <div class="button-group">
+                    <button id="start-log-btn" class="btn btn-success">Start Logging</button>
+                    <button id="stop-log-btn" class="btn btn-danger" disabled>Stop Logging</button>
+                </div>
+                <div id="logging-status" class="status-indicator idle">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Logging Idle</span>
+                </div>
+            </div>
+            <div class="analysis-container">
+                <div class="form-container">
+                    <h3>Live Sensor Data</h3>
+                    <form id="predict-form">
+                        <div class="form-grid">
+                            <div class="form-group"><label for="acc_x">Accelerometer X</label><input type="number" step="any" id="acc_x" readonly></div>
+                            <div class="form-group"><label for="acc_y">Accelerometer Y</label><input type="number" step="any" id="acc_y" readonly></div>
+                            <div class="form-group"><label for="acc_z">Accelerometer Z</label><input type="number" step="any" id="acc_z" readonly></div>
+                            <div class="form-group"><label for="gyro_x">Gyroscope X</label><input type="number" step="any" id="gyro_x" readonly></div>
+                            <div class="form-group"><label for="gyro_y">Gyroscope Y</label><input type="number" step="any" id="gyro_y" readonly></div>
+                            <div class="form-group"><label for="gyro_z">Gyroscope Z</label><input type="number" step="any" id="gyro_z" readonly></div>
+                            <div class="form-group"><label for="heart_rate">Heart Rate (BPM)</label><input type="number" step="any" id="heart_rate" readonly></div>
+                            <div class="form-group"><label for="spo2">SpO2 (%)</label><input type="number" step="any" id="spo2" readonly></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="right-panel">
+                    <div class="result-container">
+                        <h3>Live Prediction</h3>
+                        <div id="result-box">
+                            <p id="result-text">Awaiting input...</p>
+                            <div id="loader" class="hidden"></div>
+                        </div>
+                    </div>
+                    <div class="log-container">
+                        <h3>Prediction Log</h3>
+                        <ul id="prediction-log">
+                            <!-- Real-time predictions will be added here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Page -->
+        <section id="analysis" class="page">
+            <h2>Data Analysis</h2>
+            <div class="button-group">
+                <button id="refresh-analysis-btn" class="btn">Refresh Data</button>
+            </div>
+            <div class="chart-grid">
+                <div class="chart-container">
+                    <h3>Swing Distribution</h3>
+                    <canvas id="swingPieChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Accelerometer Data Over Time</h3>
+                    <canvas id="sensorLineChart"></canvas>
+                </div>
+                <div class="chart-container full-width-chart">
+                    <h3>Gyroscope Data Over Time</h3>
+                    <canvas id="gyroLineChart"></canvas>
+                </div>
+                <div class="chart-container full-width-chart">
+                    <h3>Health Metrics Over Time</h3>
+                    <canvas id="healthDataChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Page -->
+        <section id="about" class="page">
+            <h2>About This Project</h2>
+            <p>
+                This is a <b>Tennis Swing Analysis System</b> which is a real-time sports analytics platform developed for the <strong>IDEA LAB SEE</strong>. 
+                It leverages a wearable sensor device to capture accelerometer and gyroscope data, which is then processed by a sophisticated machine learning model to classify tennis strokes instantly.
+            </p>
+            
+            <h3>The Technology</h3>
+            <p>
+                The core of our prediction engine is a <strong>Stacking Classifier</strong>, an advanced ensemble method that combines the strengths of several different models to achieve higher accuracy and robustness. This meta-model makes a final prediction based on the outputs of the following base models:
+            </p>
+
+            <div class="model-card-container">
+                <div class="model-card">
+                    <h4>K-Nearest Neighbors (KNN)</h4>
+                    <p>Classifies a data point based on the majority class among its 'k' closest neighbors in the feature space.</p>
+                </div>
+                <div class="model-card">
+                    <h4>Logistic Regression</h4>
+                    <p>A statistical model that uses a logistic function to model the probability of a certain class or event existing.</p>
+                </div>
+                <div class="model-card">
+                    <h4>Random Forest Classifier</h4>
+                    <p>An ensemble of decision trees that improves accuracy and controls over-fitting by averaging multiple results.</p>
+                </div>
+                <div class="model-card">
+                    <h4>Support Vector Classifier (SVC)</h4>
+                    <p>Finds an optimal hyperplane in an N-dimensional space that distinctly classifies the data points.</p>
+                </div>
+            </div>
+
+            <h3>Project Team</h3>
+            <p>This project was proudly developed by a team of four students:</p>
+            <ul class="team-list">
+                <li>K Vikas</li>
+                <li>Kartik Satish Chandra</li>
+                <li>Dev Sisodia</li>
+                <li>Kavin Krishnan C</li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
